@@ -24,7 +24,7 @@ O objetivo do jogo é destruir todos os blocos verdes com a bola, sem deixar que
 
 ## 📦 Estrutura do Projeto
 
-- **main.py**: arquivo principal do jogo  
+- **jogo.py**: arquivo principal do jogo  
 - **Funções principais**:  
   - `criar_blocos(qtde_blocos, qtde_linhas)`: cria os blocos do jogo  
   - `desenhar_inicio_jogo()`: desenha o jogador e a bola  
