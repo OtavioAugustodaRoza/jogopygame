@@ -9,7 +9,7 @@ pygame.display.set_caption("brick breaker")
 tm_bola = 15
 bola = pygame.Rect(400 , 400, tm_bola, tm_bola)
 tm_jogador = 100
-jogador = pygame.Rect(0, 550, tm_jogador, 15)
+jogador = pygame.Rect(400, 550, tm_jogador, 15)
 
 qtde_blocos_linha = 8
 qtde_linhas_blocos= 6
@@ -74,6 +74,10 @@ def movimentar_bola(bola):
 
     if bola.y <= 0:
         movimento_bola[1] = -movimento_bola[1]
+
+    # quando a bola bater no teto
+    if bola.y + tm_bola >= tm_tela[1]:
+        return None    
 
     
     if bola.colliderect(jogador):
