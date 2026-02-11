@@ -90,7 +90,7 @@ def movimentar_bola(bola):
 
     
     if bola.y + tm_bola >= tm_tela[1]:
-        return None  
+        return None # None tem o mesmo efeito de False
 
     return movimento_bola
 
@@ -104,6 +104,24 @@ def atualizar_pontuacao(potuancao):
         return True
     else:
         return False
+
+def menu_morte():
+    fonte = pygame.font.SysFont(None, 40)
+    texto1 = fonte.render("Você Morreu", 1, cores["vermelha"])
+    texto2 = fonte.render("Aperte qualquer botão para continuar", 1, cores["branca"])
+    posicao_texto1 = (100, tm_tela[1] / 2)
+    posicao_texto2 = (tm_tela[0] / 2 - 50, posicao_texto1[1] - 50)
+
+    tela.blit(texto1, posicao_texto1)
+    tela.blit(texto2, posicao_texto2)
+
+    pygame.display.flip()
+
+    evento = pygame.event.wait()
+    if evento.type == pygame.KEYDOWN:
+        return True
+
+
 
 blocos = criar_blocos(qtde_blocos_linha, qtde_linhas_blocos)
 
@@ -119,10 +137,10 @@ while not fim_jogo:
     movimentar_jogador()         
     movimento_bola = movimentar_bola(bola)
     if not movimento_bola:
-        fim_jogo = True
+        continuar = menu_morte()
+        if continuar:
+            blocos = criar_blocos(qtde_blocos_linha, qtde_linhas_blocos)
   
-
-
     pygame.display.flip()
     pygame.time.wait(10)
 
