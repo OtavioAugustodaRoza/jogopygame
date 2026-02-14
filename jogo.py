@@ -38,7 +38,8 @@ cores = {
     "vermelha": (255, 0, 0),
     "verde": (0, 255, 0),
     "azul": (0, 0, 255),
-    "preta": (0, 0, 0)
+    "preta": (0, 0, 0),
+    "amarelo": (255, 255, 0)
 }
 
 fim_jogo = False
@@ -96,11 +97,11 @@ def movimentar_bola(bola):
 
 
     
-def atualizar_pontuacao(potuancao):
+def atualizar_pontuacao(potuacao):
     fonte = pygame.font.SysFont(None, 30)
-    texto = fonte.render(f'Pontuação: {potuancao}', 1, cores["vermelha"])
+    texto = fonte.render(f'Pontuação: {potuacao}', 1, cores["vermelha"])
     tela.blit(texto, (0, 580))
-    if potuancao >= qtde_total_blocos:
+    if potuacao >= qtde_total_blocos:
         return True
     else:
         return False
@@ -127,6 +128,20 @@ def menu_morte():
         if evento.type == pygame.KEYDOWN:
             return True
 
+def tela_vitoria():
+    fonte = pygame.font.SysFont(None, 50)
+    texto = fonte.render("Parabens você ganhou", 1, cores["amarelo"])
+    largura, altura = fonte.size("Parabens você ganhou")
+    posicao_texto = (tm_tela[0] / 2 - largura / 2, tm_tela[1] / 2)
+    tela.blit(texto, posicao_texto)
+    pygame.display.flip()
+    while True:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                return True
+            if evento.type == pygame.KEYDOWN:
+                return True
+
 
 
 blocos = criar_blocos(qtde_blocos_linha, qtde_linhas_blocos)
@@ -135,14 +150,17 @@ blocos = criar_blocos(qtde_blocos_linha, qtde_linhas_blocos)
 while not fim_jogo:
     desenhar_inicio_jogo()
     desenhar_blocos(blocos)
-    fim_jogo = atualizar_pontuacao(qtde_total_blocos - len(blocos))
+    if atualizar_pontuacao(qtde_total_blocos - len(blocos)):
+        tela_vitoria()
+        fim_jogo = True
+        continue
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             fim_jogo = True
 
     movimentar_jogador()         
     movimento_bola = movimentar_bola(bola)
-    
+
     # Sem movimento de bola == Morte
     if not movimento_bola:
         continuar = menu_morte()
