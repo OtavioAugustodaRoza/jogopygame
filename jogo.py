@@ -83,7 +83,12 @@ def movimentar_bola(bola):
     
     if bola.colliderect(jogador):
         movimento_bola[1] = -movimento_bola[1]
-
+        if bola.x > jogador.x + tm_jogador / 2:
+            if not movimento_bola[0] == 3:
+                movimento_bola[0] = -movimento_bola[0]
+        else:
+            if not movimento_bola[0] == -3:
+                movimento_bola[0] = -movimento_bola[0]
     for bloco in blocos[:]:  # iterar sobre cópia para remover
         if bola.colliderect(bloco):
             blocos.remove(bloco)
@@ -91,7 +96,7 @@ def movimentar_bola(bola):
 
     
     if bola.y + tm_bola >= tm_tela[1]:
-        return False # None tem o mesmo efeito de False
+        return False
 
     return movimento_bola
 
