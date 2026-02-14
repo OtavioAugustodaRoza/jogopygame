@@ -90,7 +90,7 @@ def movimentar_bola(bola):
 
     
     if bola.y + tm_bola >= tm_tela[1]:
-        return None # None tem o mesmo efeito de False
+        return False # None tem o mesmo efeito de False
 
     return movimento_bola
 
@@ -109,17 +109,23 @@ def menu_morte():
     fonte = pygame.font.SysFont(None, 40)
     texto1 = fonte.render("Você Morreu", 1, cores["vermelha"])
     texto2 = fonte.render("Aperte qualquer botão para continuar", 1, cores["branca"])
-    posicao_texto1 = (100, tm_tela[1] / 2)
-    posicao_texto2 = (tm_tela[0] / 2 - 50, posicao_texto1[1] - 50)
+
+    largura1, altura1 = fonte.size("Aperte qualquer botão para continuar")
+    largura2, altura2 = fonte.size("Você Morreu")
+
+    posicao_texto2 = (tm_tela[0] / 2 - largura1 / 2, tm_tela[1] / 2)
+    posicao_texto1 = (tm_tela[0] / 2 - largura2 / 2, posicao_texto2[1] - 50)
+
 
     tela.blit(texto1, posicao_texto1)
     tela.blit(texto2, posicao_texto2)
 
     pygame.display.flip()
 
-    evento = pygame.event.wait()
-    if evento.type == pygame.KEYDOWN:
-        return True
+    while True:
+        evento = pygame.event.wait()
+        if evento.type == pygame.KEYDOWN:
+            return True
 
 
 
@@ -136,10 +142,21 @@ while not fim_jogo:
 
     movimentar_jogador()         
     movimento_bola = movimentar_bola(bola)
+    
+    # Sem movimento de bola == Morte
     if not movimento_bola:
         continuar = menu_morte()
         if continuar:
+            # Cria os blocos de novo ao morrer
             blocos = criar_blocos(qtde_blocos_linha, qtde_linhas_blocos)
+
+            # Coloca a bola no centro de novo
+            bola.x = 400
+            bola.y = 400
+
+            # Declara os valores numericos de novo pois movimento_bola vira False ao morrer
+            movimento_bola = [3,-3] 
+
   
     pygame.display.flip()
     pygame.time.wait(10)
