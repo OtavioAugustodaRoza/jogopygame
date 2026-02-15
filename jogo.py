@@ -83,10 +83,6 @@ def movimentar_bola(bola):
 
     if bola.colliderect(jogador):
         movimento_bola[1] = -movimento_bola[1]
-<<<<<<< HEAD
-
-=======
->>>>>>> e4f473b62463440db54af26d0ccd2413dbb65ff6
         if bola.x > jogador.x + tm_jogador / 2:
             if not movimento_bola[0] == 3:
                 movimento_bola[0] = -movimento_bola[0]
@@ -100,20 +96,12 @@ def movimentar_bola(bola):
 
 
     if bola.y + tm_bola >= tm_tela[1]:
-<<<<<<< HEAD
         return False # None tem o mesmo efeito de False
-=======
->>>>>>> e4f473b62463440db54af26d0ccd2413dbb65ff6
         return False
 
     return movimento_bola
 
 
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> e4f473b62463440db54af26d0ccd2413dbb65ff6
 def atualizar_pontuacao(potuacao):
     fonte = pygame.font.SysFont(None, 30)
     texto = fonte.render(f'Pontuação: {potuacao}', 1, cores["vermelha"])
@@ -192,10 +180,7 @@ while not fim_jogo:
             # Declara os valores numericos de novo pois movimento_bola vira False ao morrer
             movimento_bola = [3,-3] 
 
-<<<<<<< HEAD
 
-=======
   
->>>>>>> e4f473b62463440db54af26d0ccd2413dbb65ff6
     pygame.display.flip()
     pygame.time.wait(10)
